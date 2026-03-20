@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3ecf8e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a9e6a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0fff4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="110" fill="url(#bg)" />
+
+  <!-- White card in center -->
+  <rect x="88" y="88" width="336" height="336" rx="60" fill="url(#card)" />
+
+  <!-- Chinese character 汉 -->
+  <text
+    x="256"
+    y="295"
+    font-family="serif"
+    font-size="210"
+    font-weight="bold"
+    text-anchor="middle"
+    fill="#1a9e6a"
+  >汉</text>
+
+  <!-- Small decorative dots -->
+  <circle cx="145" cy="145" r="12" fill="#3ecf8e" opacity="0.5" />
+  <circle cx="367" cy="367" r="12" fill="#3ecf8e" opacity="0.5" />
+  <circle cx="367" cy="145" r="8" fill="#3ecf8e" opacity="0.4" />
+  <circle cx="145" cy="367" r="8" fill="#3ecf8e" opacity="0.4" />
+</svg>

@@ -1,11 +1,11 @@
 {
-  "name": "다락원 중국어마스터",
-  "short_name": "중국어마스터",
+  "name": "다락원 중국어",
+  "short_name": "다락원 중국어",
   "description": "다락원 중국어마스터 STEP3 단어 학습앱",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0ea5e9",
+  "background_color": "#F0FFF0",
+  "theme_color": "#1a9e6a",
   "orientation": "portrait",
   "lang": "ko",
   "icons": [
