@@ -286,6 +286,8 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '努力', pinyin: 'nǔlì', meaning: '노력하다' },
     { chinese: '考', pinyin: 'kǎo', meaning: '시험을 치다' },
     { chinese: '办', pinyin: 'bàn', meaning: '처리하다, 방법을 강구하다' },
+  ],
+  "4": [
   ]
 };
 
@@ -487,7 +489,7 @@ export default function HomePage() {
                   </div>
                 </button>
               ))}
-              {[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((num) => (
+              {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((num) => (
                 <div key={num} className="p-6 bg-slate-100 border-2 border-dashed border-slate-200 rounded-[25px] flex items-center gap-4 opacity-60">
                   <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center text-slate-400 font-black text-xl">{num}</div>
                   <div className="text-left font-bold text-slate-400">제 {num}과 준비 중</div>
