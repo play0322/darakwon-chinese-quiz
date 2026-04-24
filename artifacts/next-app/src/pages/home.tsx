@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Home as HomeIcon } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { saveQuizResult, saveUserLogin } from '@/lib/db';
 
 type VocabularyItem = {
   chinese: string;
@@ -283,7 +284,6 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '累死了', pinyin: 'lèi sǐ le', meaning: '피곤해 죽겠다' },
     { chinese: '时刻', pinyin: 'shíkè', meaning: '시각, 때' },
     { chinese: '不错', pinyin: 'búcuò', meaning: '괜찮다' },
-    { chinese: '努力', pinyin: 'nǔlì', meaning: '노력하다' },
     { chinese: '考', pinyin: 'kǎo', meaning: '시험을 치다' },
     { chinese: '办', pinyin: 'bàn', meaning: '처리하다, 방법을 강구하다' },
   ],
@@ -296,7 +296,7 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '咱们', pinyin: 'zánmen', meaning: '우리(들)' },
     { chinese: '场', pinyin: 'chǎng', meaning: '차례, 바탕 (경기 등을 세는 양사)' },
     { chinese: '比赛', pinyin: 'bǐsài', meaning: '경기, 시합' },
-    { chinese: '那还用说', pinyin: 'Nà hái yòng shuō', meaning: '말할 것도 없지! 그렇고 말고!' },
+    { chinese: '那还用说', pinyin: 'nà hái yòng shuō', meaning: '말할 것도 없지! 그렇고 말고!' },
     { chinese: '可惜', pinyin: 'kěxī', meaning: '섭섭하다, 아쉽다, 애석하다' },
     { chinese: '上次', pinyin: 'shàngcì', meaning: '지난번, 저번' },
     { chinese: '负伤', pinyin: 'fùshāng', meaning: '부상을 당하다, 다치다' },
@@ -318,7 +318,7 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '今晚', pinyin: 'jīnwǎn', meaning: '오늘 밤' },
     { chinese: '相信', pinyin: 'xiāngxìn', meaning: '믿다, 신뢰하다' },
     { chinese: '流利', pinyin: 'liúlì', meaning: '유창하다' },
-    { chinese: '还给', pinyin: 'huángěi', meaning: '돌려주다' },
+    { chinese: '还给', pinyin: 'huán gěi', meaning: '돌려주다' },
     { chinese: '吃药', pinyin: 'chī yào', meaning: '약을 먹다' },
     { chinese: '功课', pinyin: 'gōngkè', meaning: '학업, 숙제, 공부' },
     { chinese: '猜', pinyin: 'cāi', meaning: '추측하다, 알아맞히다' },
@@ -357,8 +357,6 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '音乐', pinyin: 'yīnyuè', meaning: '음악' },
   ]
 };
-
-const GAS_URL = "https://script.google.com/macros/s/AKfycbx0yepSATmVnqx_446z0_mnDswdp-WlCLpjwdeg8MvY7BPl8CVn-ZLggqHsnSEkPlte/exec";
 
 export default function HomePage() {
   const [step, setStep] = useState<AppStep>('login');
@@ -465,19 +463,13 @@ export default function HomePage() {
   };
 
   const finishQuiz = async () => {
-    if (GAS_URL.startsWith("http")) {
-      fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify({
-          studentName,
-          lesson: selectedLesson,
-          mode: isReview ? "오답복습" : quizMode,
-          score,
-          total: isReview ? incorrectList.length : currentLessonData.length
-        })
-      });
-    }
+    await saveQuizResult({
+      studentName,
+      lesson: selectedLesson,
+      mode: isReview ? "오답복습" : quizMode,
+      score,
+      total: isReview ? incorrectList.length : currentLessonData.length,
+    });
     setStep('result');
   };
 
@@ -514,9 +506,9 @@ export default function HomePage() {
         </div>
       </nav>
 
-      <main className="flex-1 p-6 max-w-md mx-auto w-full">
+      <main className="flex-1 px-4 py-5 max-w-md mx-auto w-full">
         {step === 'login' && (
-          <div className="flex flex-col gap-4 mt-10 text-center">
+          <div className="flex flex-col gap-4 mt-8 text-center">
             <h1 className="text-2xl font-black text-sky-900 leading-tight">다락원 중국어마스터<br/>STEP3</h1>
             <p className="text-slate-500 -mt-2 mb-4 font-medium">(단어 학습앱)</p>
             <input
@@ -524,12 +516,12 @@ export default function HomePage() {
               placeholder="이름을 입력하세요"
               className="p-5 border-2 border-sky-100 rounded-[30px] focus:border-sky-500 outline-none shadow-sm text-center font-bold"
               value={studentName}
-              onKeyDown={(e) => { if (e.key === 'Enter' && studentName.trim()) { unlockAudio(); setStep('select-lesson'); } }}
+              onKeyDown={(e) => { if (e.key === 'Enter' && studentName.trim()) { unlockAudio(); saveUserLogin(studentName); setStep('select-lesson'); } }}
               onChange={(e) => setStudentName(e.target.value)}
             />
             <button
               disabled={!studentName.trim()}
-              onClick={() => { unlockAudio(); setStep('select-lesson'); }}
+              onClick={() => { unlockAudio(); saveUserLogin(studentName); setStep('select-lesson'); }}
               className="p-5 bg-sky-500 text-white rounded-[30px] font-black text-xl shadow-lg active:scale-95 disabled:bg-slate-300 hover:bg-sky-600 transition-colors"
             >
               학습 시작
@@ -589,24 +581,28 @@ export default function HomePage() {
             </div>
 
             <div
-              className="text-center py-10 bg-white w-full rounded-[40px] shadow-xl border-2 border-sky-50 cursor-pointer active:scale-95 transition-all relative group"
+              className="text-center py-7 bg-white w-full rounded-[36px] shadow-xl border-2 border-sky-50 cursor-pointer active:scale-95 transition-all relative group"
               onClick={() => speak(currentQuestion.chinese)}
             >
-              <div className="text-5xl md:text-6xl font-black text-sky-900 mb-2 tracking-tight group-hover:text-sky-600 transition-colors break-words px-4">
+              <div className={`font-black text-sky-900 mb-2 tracking-tight group-hover:text-sky-600 transition-colors break-words px-4 leading-tight ${
+                quizMode === 'chinese'
+                  ? 'text-2xl sm:text-3xl'
+                  : 'text-5xl sm:text-6xl'
+              }`}>
                 {getQuestionText()}
               </div>
-              <p className="text-sky-300 font-bold text-xs tracking-[0.2em] uppercase">
+              <p className="text-sky-300 font-bold text-xs tracking-[0.2em] uppercase mt-1">
                 {quizMode === 'chinese' ? "듣고 알맞은 한자를 고르세요" : "발음 듣기 (클릭)"}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 w-full">
+            <div className="grid grid-cols-1 gap-2.5 w-full">
               {options.map((opt, i) => (
                 <button
                   key={i}
                   onClick={() => handleAnswer(opt)}
                   disabled={showNext}
-                  className={`p-4 rounded-[24px] border-2 font-bold text-lg md:text-xl transition-all shadow-sm active:scale-95 text-center break-words ${getButtonClass(opt)}`}
+                  className={`p-3.5 rounded-[20px] border-2 font-bold text-base sm:text-lg transition-all shadow-sm active:scale-95 text-center break-words ${getButtonClass(opt)}`}
                 >
                   {opt}
                 </button>
@@ -614,7 +610,7 @@ export default function HomePage() {
             </div>
 
             {showNext && (
-              <button onClick={nextQuestion} className="w-full p-4 bg-teal-500 text-white rounded-[30px] font-bold text-xl md:text-2xl shadow-2xl animate-pulse mt-3 hover:bg-teal-600 transition-colors">
+              <button onClick={nextQuestion} className="w-full p-4 bg-teal-500 text-white rounded-[28px] font-bold text-xl shadow-2xl animate-pulse mt-2 hover:bg-teal-600 transition-colors">
                 {quizIndex + 1 < currentQuizData.length ? '다음 문제 ➔' : '결과 보기'}
               </button>
             )}
