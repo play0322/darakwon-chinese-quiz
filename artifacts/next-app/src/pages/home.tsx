@@ -355,7 +355,62 @@ const VOCAB_DATA: Record<string, VocabularyItem[]> = {
     { chinese: '留个纪念', pinyin: 'liú ge jìniàn', meaning: '기념으로 남기다' },
     { chinese: '投进', pinyin: 'tóujìn', meaning: '(공을) 던져 넣다, 골인시키다' },
     { chinese: '音乐', pinyin: 'yīnyuè', meaning: '음악' },
-  ]
+  ],
+  "6": [
+    { chinese: '鞋', pinyin: 'xié', meaning: '신발' },
+    { chinese: '皮鞋', pinyin: 'píxié', meaning: '구두' },
+    { chinese: '运动鞋', pinyin: 'yùndòngxié', meaning: '운동화' },
+    { chinese: '双', pinyin: 'shuāng', meaning: '켤레, 쌍, 매' },
+    { chinese: '遗憾', pinyin: 'yíhàn', meaning: '유감스럽다' },
+    { chinese: '种', pinyin: 'zhǒng', meaning: '종, 종류, 갈래' },
+    { chinese: '款式', pinyin: 'kuǎnshì', meaning: '스타일, 양식, 디자인' },
+    { chinese: '大小', pinyin: 'dàxiǎo', meaning: '크기' },
+    { chinese: '合适', pinyin: 'héshì', meaning: '적당하다, 알맞다' },
+    { chinese: '原价', pinyin: 'yuánjià', meaning: '원래 가격' },
+    { chinese: '打折', pinyin: 'dǎzhé', meaning: '할인하다' },
+    { chinese: '现价', pinyin: 'xiànjià', meaning: '현재 가격' },
+    { chinese: '价钱', pinyin: 'jiàqián', meaning: '값, 가격' },
+    { chinese: '稍微', pinyin: 'shāowēi', meaning: '조금, 약간, 다소' },
+    { chinese: '支付', pinyin: 'zhīfù', meaning: '결제하다' },
+    { chinese: '扫', pinyin: 'sǎo', meaning: '스캔하다' },
+    { chinese: '二维码', pinyin: 'èrwéimǎ', meaning: 'QR코드' },
+    { chinese: '商场', pinyin: 'shāngchǎng', meaning: '쇼핑센터, 대형매장' },
+    { chinese: '大减价', pinyin: 'dà jiǎnjià', meaning: '빅 세일' },
+    { chinese: '看上', pinyin: 'kànshang', meaning: '마음에 들다, 눈에 들다' },
+    { chinese: '售货员', pinyin: 'shòuhuòyuán', meaning: '판매원' },
+    { chinese: '推荐', pinyin: 'tuījiàn', meaning: '추천하다' },
+    { chinese: '其他', pinyin: 'qítā', meaning: '기타, 그 밖, 그 외' },
+    { chinese: '商品', pinyin: 'shāngpǐn', meaning: '상품, 물건' },
+    { chinese: '满意', pinyin: 'mǎnyì', meaning: '만족하다, 만족스럽다' },
+    { chinese: '最后', pinyin: 'zuìhòu', meaning: '최후, 마지막, 끝' },
+    { chinese: '选择', pinyin: 'xuǎnzé', meaning: '고르다, 선택하다' },
+    { chinese: '号', pinyin: 'hào', meaning: '(신발 치수 단위)' },
+    { chinese: '卖完', pinyin: 'màiwán', meaning: '다 팔리다' },
+    { chinese: '新款', pinyin: 'xīnkuǎn', meaning: '신상품' },
+    { chinese: '手机', pinyin: 'shǒujī', meaning: '휴대폰' },
+    { chinese: '信用卡', pinyin: 'xìnyòngkǎ', meaning: '신용카드' },
+    { chinese: '结账', pinyin: 'jiézhàng', meaning: '결제하다, 계산하다' },
+    { chinese: '现金', pinyin: 'xiànjīn', meaning: '현금' },
+    { chinese: '退换', pinyin: 'tuìhuàn', meaning: '반품이나 교환' },
+    { chinese: '收据', pinyin: 'shōujù', meaning: '영수증' },
+    { chinese: '包装', pinyin: 'bāozhuāng', meaning: '포장' },
+    { chinese: '颜色', pinyin: 'yánsè', meaning: '색깔, 색상' },
+    { chinese: '百货商场', pinyin: 'bǎihuò shāngchǎng', meaning: '백화점' },
+    { chinese: '服装', pinyin: 'fúzhuāng', meaning: '의류, 복장' },
+    { chinese: '旗袍', pinyin: 'qípáo', meaning: '치파오' },
+    { chinese: '传统', pinyin: 'chuántǒng', meaning: '전통' },
+    { chinese: '衬衣', pinyin: 'chènyī', meaning: '셔츠' },
+    { chinese: '大衣', pinyin: 'dàyī', meaning: '코트, 외투' },
+    { chinese: '花', pinyin: 'huā', meaning: '(돈을) 쓰다, 소비하다' },
+    { chinese: '筷子', pinyin: 'kuàizi', meaning: '젓가락' },
+    { chinese: '花瓶', pinyin: 'huāpíng', meaning: '화병' },
+    { chinese: '暖和', pinyin: 'nuǎnhuo', meaning: '따뜻하다' },
+    { chinese: '结婚', pinyin: 'jiéhūn', meaning: '결혼하다' },
+    { chinese: '夫妻', pinyin: 'fūqī', meaning: '부부' },
+    { chinese: '附近', pinyin: 'fùjìn', meaning: '부근, 근처' },
+    { chinese: '气温', pinyin: 'qìwēn', meaning: '기온' },
+    { chinese: '天气预报', pinyin: 'tiānqì yùbào', meaning: '일기예보' },
+  ],
 };
 
 export default function HomePage() {
@@ -548,7 +603,7 @@ export default function HomePage() {
                   </div>
                 </button>
               ))}
-              {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((num) => (
+              {[5, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((num) => (
                 <div key={num} className="p-6 bg-slate-100 border-2 border-dashed border-slate-200 rounded-[25px] flex items-center gap-4 opacity-60">
                   <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center text-slate-400 font-black text-xl">{num}</div>
                   <div className="text-left font-bold text-slate-400">제 {num}과 준비 중</div>
